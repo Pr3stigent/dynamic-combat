@@ -11,7 +11,7 @@ function setDebounce(id: string) {
 }
 
 function validateDebounce(data: validateData) {
-    const debounce = getDebounce(data.id)
+    const debounce = getDebounce(data.id) as number
     let conditionTrue
     
     switch(data.conditionType) {
@@ -24,7 +24,7 @@ function validateDebounce(data: validateData) {
     }
     
     if (conditionTrue && data.autoSet) {
-        setDebounce(dqta.id)
+        setDebounce(data.id)
     }
     
     return conditionTrue
