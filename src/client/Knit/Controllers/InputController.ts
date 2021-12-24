@@ -8,9 +8,12 @@ declare global {
 	}
 }
 
-interface keyDownInterface {
-	KeyType?: string
+interface keyDownDataInterface {
+	KeyType?: "Held" | "Timed" | "Pressed"
 	KeyTime?: number
+}
+
+interface keyDownInterface extends keyDownDataInterface {
 	Callback?: () => void
 }
 
@@ -137,7 +140,7 @@ const InputController = Knit.CreateController({
 		DifferentKeys: new Map<string, { [key: string]: boolean }>(),
 	},
 
-	KeyDown(key: EnumItem | EnumItem[], callback: () => void, data?: { KeyType: string; KeyTime: number }) {
+	KeyDown(key: EnumItem | EnumItem[], callback: () => void, data?: keyDownDataInterface) {
 		const keyType = data ? data.KeyType : "Pressed"
 		const keyTime = data ? data.KeyTime : 0.2
 
@@ -172,7 +175,7 @@ const InputController = Knit.CreateController({
 		}
 	},
 
-	MultipleKeysDown(keys: EnumItem[], callback: () => void, data?: { KeyType: string; KeyTime: number }) {
+	MultipleKeysDown(keys: EnumItem[], callback: () => void, data?: keyDownDataInterface) {
 		const keyType = data ? data.KeyType : "Pressed"
 		const keyTime = data ? data.KeyTime : 0.2
 

@@ -1,5 +1,7 @@
 import { KnitClient as Knit } from "@rbxts/knit"
 
+import Debounce from "shared/Debounce"
+
 declare global {
 	interface KnitControllers {
 		ComboController: typeof ComboController
@@ -13,7 +15,7 @@ const ComboController = Knit.CreateController({
 	Name: "ComboController",
 	Combo: "",
 
-	Start() {
+	Attack() {
 		let key = ""
 		if (CharacterController.StateMachine.CurrentState === "InAir") {
 			key = "A"
@@ -23,10 +25,15 @@ const ComboController = Knit.CreateController({
 		this.Combo += "L" + key
 	},
 
+	Block(toggle: boolean) {},
+
 	KnitStart() {
 		InputController = Knit.GetController("InputController")
 		CharacterController = Knit.GetController("CharacterController")
-		InputController.KeyDown(Enum.UserInputType.MouseButton1, () => this.Start())
+
+		InputController.KeyDown(Enum.UserInputType.MouseButton1, () => this.Attack())
+		InputController.KeyDown(Enum.KeyCode.F, () => this.Block(true), { KeyType: "Held" })
+		InputController.KeyUp(Enum.KeyCode.F, () => this.Block(false))
 	},
 })
 
