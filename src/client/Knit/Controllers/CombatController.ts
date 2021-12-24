@@ -25,7 +25,7 @@ const ComboController = Knit.CreateController({
 		this.Combo += "L" + key
 	},
 
-	Block(toggle: boolean) {},
+	Block(toggle: boolean) {},//L boohoo
 
 	KnitStart() {
 		InputController = Knit.GetController("InputController")
