@@ -1,3 +1,5 @@
+import { Players } from "@rbxts/services"
+
 import { KnitClient as Knit } from "@rbxts/knit"
 
 import Debounce from "shared/Debounce"
@@ -7,6 +9,10 @@ declare global {
 		ComboController: typeof ComboController
 	}
 }
+
+const player = Players.LocalPlayer
+const character = player.Character || player.CharacterAdded.Wait()[0] as Model
+const state = character.WaitForChild("State") as Configuration
 
 let InputController = Knit.GetController("InputController")
 let CharacterController = Knit.GetController("CharacterController")
@@ -25,7 +31,17 @@ const ComboController = Knit.CreateController({
 		this.Combo += "L" + key
 	},
 
-	Block(toggle: boolean) {},//L boohoo
+	Block(toggle: boolean) {
+	  if (toggle) {
+	    if (!state.GetAttribute("Blocking")) {
+	      state.SetAttribute("Blocking", true)
+	    }
+	  } else {
+	    if (state.GetAttribute("Blocking")) {
+	      state.SetAttribute("Blocking", false)
+	    }
+	  }
+	},
 
 	KnitStart() {
 		InputController = Knit.GetController("InputController")
