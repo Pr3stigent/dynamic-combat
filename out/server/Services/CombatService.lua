@@ -1,4 +1,4 @@
--- Compiled with roblox-ts v1.2.7
+-- Compiled with roblox-ts v1.2.9
 local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
 -- |SERVICES|--
 local Players = TS.import(script, TS.getModule(script, "@rbxts", "services")).Players

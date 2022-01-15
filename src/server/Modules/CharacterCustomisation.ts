@@ -21,14 +21,16 @@ const itemFunctions = {
 	Clothing: (item: string, itemNumber: number, colourBased: boolean) => {},
 }
 
-export = (actor: Model, data: appearanceInterface) => {
-	for (const [item, itemNumber] of pairs(data)) {
-		if (item === "Eyes" || item === "Mouth") {
-			itemFunctions.Face(item, itemNumber, typeIs(item.find("Colour"), "number"))
-		} else if (item === "Shirt" || item === "Pants" || item === "Shoes") {
-			itemFunctions.Clothing(item, itemNumber, typeIs(item.find("Colour"), "number"))
-		} else if (item === "Hair") {
-			itemFunctions.Head(item, itemNumber, typeIs(item.find("Colour"), "number"))
+export = (actor: Model, data?: appearanceInterface) => {
+	if (data !== undefined) {
+		for (const [item, itemNumber] of pairs(data)) {
+			if (item === "Eyes" || item === "Mouth") {
+				itemFunctions.Face(item, itemNumber, typeIs(item.find("Colour"), "number"))
+			} else if (item === "Shirt" || item === "Pants" || item === "Shoes") {
+				itemFunctions.Clothing(item, itemNumber, typeIs(item.find("Colour"), "number"))
+			} else if (item === "Hair") {
+				itemFunctions.Head(item, itemNumber, typeIs(item.find("Colour"), "number"))
+			}
 		}
 	}
 

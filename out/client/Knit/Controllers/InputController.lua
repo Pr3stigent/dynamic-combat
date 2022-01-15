@@ -1,4 +1,4 @@
--- Compiled with roblox-ts v1.2.7
+-- Compiled with roblox-ts v1.2.9
 local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
 local UserInputService = TS.import(script, TS.getModule(script, "@rbxts", "services")).UserInputService
 local Knit = TS.import(script, TS.getModule(script, "@rbxts", "knit").Knit).KnitClient
@@ -115,8 +115,8 @@ local InputController = Knit.CreateController({
 		DifferentKeys = {},
 	},
 	KeyDown = function(self, key, callback, data)
-		local keyType = data and data.KeyType or "Pressed"
-		local keyTime = data and data.KeyTime or 0.2
+		local keyType = if data then data.KeyType else "Pressed"
+		local keyTime = if data then data.KeyTime else 0.2
 		if type(key) == "table" then
 			local keyName = sort(enumItemsToStrings(key))
 			if not self.cache.DifferentKeysDown[keyName] then
@@ -154,8 +154,8 @@ local InputController = Knit.CreateController({
 		end
 	end,
 	MultipleKeysDown = function(self, keys, callback, data)
-		local keyType = data and data.KeyType or "Pressed"
-		local keyTime = data and data.KeyTime or 0.2
+		local keyType = if data then data.KeyType else "Pressed"
+		local keyTime = if data then data.KeyTime else 0.2
 		local keyName = sort(enumItemsToStrings(keys))
 		if not self.cache.MultipleKeysDown[keyName] then
 			-- ▼ Map.set ▼
@@ -258,7 +258,7 @@ local InputController = Knit.CreateController({
 				for _, data2 in ipairs(data) do
 					local keyType = data2.KeyType
 					local callback = data2.Callback
-					local inputKey = input.KeyCode == Enum.KeyCode.Unknown and input.UserInputType or input.KeyCode
+					local inputKey = if input.KeyCode == Enum.KeyCode.Unknown then input.UserInputType else input.KeyCode
 					if data2.ConsistOfKeys == nil then
 						return nil
 					end
@@ -285,7 +285,7 @@ local InputController = Knit.CreateController({
 					end
 				end
 			end
-			local inputKey = input.KeyCode == Enum.KeyCode.Unknown and input.UserInputType or input.KeyCode
+			local inputKey = if input.KeyCode == Enum.KeyCode.Unknown then input.UserInputType else input.KeyCode
 			local cacheKey = self.cache.SingleKeysDown[inputKey]
 			if cacheKey ~= nil then
 				for _, data in ipairs(cacheKey) do
@@ -327,7 +327,7 @@ local InputController = Knit.CreateController({
 			for key, data in pairs(self.cache.DifferentKeysUp) do
 				for _, data2 in ipairs(data) do
 					local callback = data2.Callback
-					local inputKey = input.KeyCode == Enum.KeyCode.Unknown and input.UserInputType or input.KeyCode
+					local inputKey = if input.KeyCode == Enum.KeyCode.Unknown then input.UserInputType else input.KeyCode
 					if data2.ConsistOfKeys == nil then
 						return nil
 					end
@@ -344,7 +344,7 @@ local InputController = Knit.CreateController({
 					end
 				end
 			end
-			local inputKey = input.KeyCode == Enum.KeyCode.Unknown and input.UserInputType or input.KeyCode
+			local inputKey = if input.KeyCode == Enum.KeyCode.Unknown then input.UserInputType else input.KeyCode
 			local cacheKey = self.cache.SingleKeysUp[inputKey]
 			if cacheKey ~= nil then
 				for _, callback in ipairs(cacheKey) do

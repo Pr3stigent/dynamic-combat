@@ -1,4 +1,4 @@
--- Compiled with roblox-ts v1.2.7
+-- Compiled with roblox-ts v1.2.9
 local TS = require(game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("RuntimeLib"))
 local Players = TS.import(script, TS.getModule(script, "@rbxts", "services")).Players
 local Knit = TS.import(script, TS.getModule(script, "@rbxts", "knit").Knit).KnitClient
@@ -91,7 +91,7 @@ local CharacterController = Knit.CreateController({
 			elseif newState == Enum.HumanoidStateType.Landed then
 				local velocity = humanoidRootPart:GetVelocityAtPosition(humanoidRootPart.Position)
 				local speed = Vector3.new(velocity.X, 0, velocity.Z).Magnitude
-				self.MovementStateMachine:SwitchState((speed >= 1 and (humanoid.WalkSpeed == 9 and "Walk" or ((humanoid.WalkSpeed == 20 and "Run") or "Walk"))) or "Idle")
+				self.MovementStateMachine:SwitchState((speed >= 1 and (if humanoid.WalkSpeed == 9 then "Walk" else (humanoid.WalkSpeed == 20 and "Run") or "Walk")) or "Idle")
 				if self.MovementStateMachine.CurrentState == "Run" then
 					if not runningTrack.IsPlaying then
 						runningTrack:Play(nil, nil, 1.2)
